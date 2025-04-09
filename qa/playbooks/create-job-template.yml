@@ -1,6 +1,6 @@
 ---
 - name: Playbook for testing
-  hosts: ec2-54-86-58-244.compute-1.amazonaws.com
+  hosts: 192.168.64.5
   gather_facts: false
   
   
