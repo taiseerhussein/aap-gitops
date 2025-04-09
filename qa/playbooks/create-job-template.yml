@@ -1,0 +1,41 @@
+---
+- name: Playbook for testing
+  hosts: ec2-54-86-58-244.compute-1.amazonaws.com
+  gather_facts: false
+  
+  
+  tasks:
+    - name: Create organization
+      ansible.controller.organization:
+        name: "Foo"
+        description: "Foo bar organization"
+        state: present
+    
+    - name: Create Template
+      ansible.controller.team:
+        name: Dev Template
+        description: Developer team - Dev Env
+        organization: Foo
+        state: present
+
+
+    - name: Creating Removal Job Template with Survey
+      ansible.controller.job_template:
+        name: Remove Terraform Manifest AWS
+        organization: Default
+        job_type: run
+        inventory: Demo Inventory
+        project: aws-tf
+        execution_environment: tr
+        playbook: terraform_aws_destroy.yml
+        credentials:
+          - aws-ec2
+          - aws-tf-keys
+        state: present
+        extra_vars:
+          pah_pass: "{{ lookup('env', 'PAH_PASS') }}"
+          # - cert_key_file: "\"{{ lookup('env', 'CERT_KEY_FILE') }}\""
+          # - mytoken: "\"{{ lookup('env', 'GIT_TOKEN') }}\""
+          # - username: "\"{{ lookup('env', 'GIT_USERNAME') }}\""
+       # survey_spec: "{{ slurpfile['content'] | b64decode }}"
+       # survey_enabled: true
