@@ -1,6 +1,6 @@
 ---
 - name: Playbook for testing
-  hosts: localhost
+  hosts: 192.168.64.5
   gather_facts: false
   
   
