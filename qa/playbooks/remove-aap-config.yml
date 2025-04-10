@@ -1,0 +1,35 @@
+---
+- name: Playbook for testing
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../var_files/orgs.yml
+    - ../var_files/teams.yml
+    - ../var_files/projects.yml
+    - ../var_files/job_templates.yml
+  
+  tasks:
+
+    - name: Creating Job Templates
+      ansible.controller.job_template:
+        name: "{{ item.name }}"
+        state: absent
+      loop: "{{ controller_templates }}"
+    
+    - name: Create Projects
+      ansible.controller.project:
+        name: "{{ item.name }}"
+        state: absent
+      loop: "{{ controller_projects }}"
+
+    - name: Create Teams
+      ansible.controller.team:
+        name: "{{ item.name }}"
+        state: absent
+      loop: "{{ controller_teams }}"
+
+    - name: Create organizations
+      ansible.controller.organization:
+        name: "{{ item.name }}"
+        state: absent
+      loop: "{{ controller_organizations }}"
