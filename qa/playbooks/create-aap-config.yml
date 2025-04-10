@@ -41,10 +41,10 @@
       ansible.controller.job_template:
         name: "{{ item.name }}"
         organization: "{{ item.organization }}"
-        job_type: "{{ job_type }}"
+        job_type: "{{ item.job_type }}"
         inventory: "{{ item.inventory }}"
         project: "{{ item.project }}"
-        execution_environment: tf
+        execution_environment: "{{ item.execution_environment }}"
         playbook: "{{ item.playbook }}"
         credentials: "{{ item.credentials }}"
         state: present
