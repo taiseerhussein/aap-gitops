@@ -28,8 +28,8 @@
       ansible.controller.project:
         name: "{{ item.name }}"
         description: "{{ item.description }}"
-        organization: "{{ item. }}"
-        scm_branch: "{{ item.organization }}"
+        organization: "{{ item.organization }}"
+        scm_branch: "{{ item.scm_branch }}"
         scm_clean: "{{ item.scm_clean }}"
         scm_delete_on_update: "{{ item.scm_delete_on_update }}"
         scm_type: "{{ item.scm_type }}"
