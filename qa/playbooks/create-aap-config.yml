@@ -1,0 +1,51 @@
+---
+- name: Playbook for testing
+  hosts: localhost
+  gather_facts: false
+  vars_files:
+    - ../var_files/orgs.yml
+    - ../var_files/teams.yml
+    - ../var_files/projects.yml
+    - ../var_files/job_templates.yml
+  
+  tasks:
+    - name: Create organizations
+      ansible.controller.organization:
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        state: present
+      loop: "{{ controller_organizations }}"
+    
+    - name: Create Teams
+      ansible.controller.team:
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        organization: "{{ item.organization }}"
+        state: present
+      loop: "{{ controller_teams }}"
+
+    - name: Create Projects
+      ansible.controller.project:
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
+        organization: "{{ item. }}"
+        scm_branch: "{{ item.organization }}"
+        scm_clean: "{{ item.scm_clean }}"
+        scm_delete_on_update: "{{ item.scm_delete_on_update }}"
+        scm_type: "{{ item.scm_type }}"
+        scm_update_on_launch: "{{ item.scm_update_on_launch }}"
+        scm_url: "{{ item.scm_url }}"
+      loop: "{{ controller_projects }}"
+
+    - name: Creating Job Templates
+      ansible.controller.job_template:
+        name: "{{ item.name }}"
+        organization: "{{ item.organization }}"
+        job_type: "{{ job_type }}"
+        inventory: "{{ item.inventory }}"
+        project: "{{ item.project }}"
+        execution_environment: tf
+        playbook: "{{ item.playbook }}"
+        credentials: "{{ item.credentials }}"
+        state: present
+      loop: "{{ controller_templates }}"
