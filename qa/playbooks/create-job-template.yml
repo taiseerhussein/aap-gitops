@@ -2,23 +2,23 @@
 - name: Playbook for testing
   hosts: localhost
   gather_facts: false
-  vars:
-    controller:
-      host: '{{ lookup("env", "CONTROLLER_HOST") }}'
-      username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
-      password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
+  # vars:
+  #   controller:
+  #     host: '{{ lookup("env", "CONTROLLER_HOST") }}'
+  #     username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
+  #     password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
   
   tasks:
     - name: Create organization
       ansible.controller.organization:
-        controller_host: 192.168.64.5
-        controller_username: admin
-        controller_password: admin
+        # controller_host: 192.168.64.5
+        # controller_username: admin
+        # controller_password: admin
         name: "Foo"
         description: "Foo bar organization"
         state: present
     
-    - name: Create Template
+    - name: Create Team
       ansible.controller.team:
         name: Dev Template
         description: Developer team - Dev Env
@@ -33,7 +33,7 @@
         job_type: run
         inventory: Demo Inventory
         project: aws-tf
-        execution_environment: tr
+        execution_environment: tf
         playbook: terraform_aws_destroy.yml
         credentials:
           - aws-ec2
