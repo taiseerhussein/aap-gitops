@@ -10,25 +10,26 @@
   
   tasks:
 
-    - name: Creating Job Templates
+    - name: Delete Job Templates
       ansible.controller.job_template:
         name: "{{ item.name }}"
         state: absent
       loop: "{{ controller_templates }}"
     
-    - name: Create Projects
+    - name: Delete Projects
       ansible.controller.project:
         name: "{{ item.name }}"
         state: absent
       loop: "{{ controller_projects }}"
 
-    - name: Create Teams
+    - name: Delete Teams
       ansible.controller.team:
         name: "{{ item.name }}"
+        organization: "{{ item.organization }}"
         state: absent
       loop: "{{ controller_teams }}"
 
-    - name: Create organizations
+    - name: Delete organizations
       ansible.controller.organization:
         name: "{{ item.name }}"
         state: absent
