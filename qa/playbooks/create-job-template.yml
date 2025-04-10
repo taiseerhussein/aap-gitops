@@ -2,21 +2,16 @@
 - name: Playbook for testing
   hosts: localhost
   gather_facts: false
-  # vars:
-  #   controller:
-  #     host: '{{ lookup("env", "CONTROLLER_HOST") }}'
-  #     username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
-  #     password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
+  vars_files:
+    - ../var_files/orgs.yml
   
   tasks:
     - name: Create organization
       ansible.controller.organization:
-        # controller_host: 192.168.64.5
-        # controller_username: admin
-        # controller_password: admin
-        name: "Foo"
-        description: "Foo bar organization"
+        name: "{{ item.name }}"
+        description: "{{ item.description }}"
         state: present
+      loop: "{{ controller_organizations }}"
     
     - name: Create Team
       ansible.controller.team:
@@ -35,14 +30,4 @@
         project: ansible-terraform
         execution_environment: tf
         playbook: terraform_aws_destroy.yml
-        # credentials:
-        #   - aws-ec2
-        #   - aws-tf-keys
         state: present
-        # extra_vars:
-        #   pah_pass: "{{ lookup('env', 'PAH_PASS') }}"
-          # - cert_key_file: "\"{{ lookup('env', 'CERT_KEY_FILE') }}\""
-          # - mytoken: "\"{{ lookup('env', 'GIT_TOKEN') }}\""
-          # - username: "\"{{ lookup('env', 'GIT_USERNAME') }}\""
-       # survey_spec: "{{ slurpfile['content'] | b64decode }}"
-       # survey_enabled: true
