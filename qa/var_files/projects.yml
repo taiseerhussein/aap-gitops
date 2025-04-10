@@ -2,6 +2,7 @@
 controller_projects:
   - name: ansible-terraform
     organization: Dev
+    description: AAP terraform POC
     scm_branch: main
     scm_clean: 'no'
     scm_delete_on_update: 'no'
@@ -11,6 +12,7 @@ controller_projects:
 
   - name: automated-satellite
     organization: Dev
+    description: AAP satellite POC
     scm_branch: aap2-rhdp-prod
     scm_clean: 'no'
     scm_delete_on_update: 'no'
