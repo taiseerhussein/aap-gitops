@@ -19,7 +19,7 @@ controller_templates:
     project: automated-satellite
     playbook: satellite_publish.yml
     organization: Dev
-    execution_environment: default
+    execution_environment: Default execution environment
 
   # - name: Dynamic Inventory
   #   credentials:
