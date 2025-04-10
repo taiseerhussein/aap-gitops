@@ -32,15 +32,15 @@
         organization: Default
         job_type: run
         inventory: Demo Inventory
-        project: aws-tf
+        project: ansible-terraform
         execution_environment: tf
         playbook: terraform_aws_destroy.yml
-        credentials:
-          - aws-ec2
-          - aws-tf-keys
+        # credentials:
+        #   - aws-ec2
+        #   - aws-tf-keys
         state: present
-        extra_vars:
-          pah_pass: "{{ lookup('env', 'PAH_PASS') }}"
+        # extra_vars:
+        #   pah_pass: "{{ lookup('env', 'PAH_PASS') }}"
           # - cert_key_file: "\"{{ lookup('env', 'CERT_KEY_FILE') }}\""
           # - mytoken: "\"{{ lookup('env', 'GIT_TOKEN') }}\""
           # - username: "\"{{ lookup('env', 'GIT_USERNAME') }}\""
