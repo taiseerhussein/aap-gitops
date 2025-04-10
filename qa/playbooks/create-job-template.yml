@@ -2,7 +2,11 @@
 - name: Playbook for testing
   hosts: 192.168.64.5
   gather_facts: false
-  
+  vars:
+    controller:
+      host: '{{ lookup("env", "CONTROLLER_HOST") }}'
+      username: '{{ lookup("env", "CONTROLLER_USERNAME") }}'
+      password: '{{ lookup("env", "CONTROLLER_PASSWORD") }}'
   
   tasks:
     - name: Create organization
