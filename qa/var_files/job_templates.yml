@@ -15,7 +15,7 @@ controller_templates:
     credentials:
       - local-m
     job_type: run
-    inventory: Workshop Inventory
+    inventory: Demo Inventory
     project: automated-satellite
     playbook: satellite_publish.yml
     organization: Dev
