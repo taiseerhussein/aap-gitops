@@ -7,6 +7,9 @@
   tasks:
     - name: Create organization
       ansible.controller.organization:
+        controller_host: 192.168.64.5
+        controller_username: admin
+        controller_password: admin
         name: "Foo"
         description: "Foo bar organization"
         state: present
