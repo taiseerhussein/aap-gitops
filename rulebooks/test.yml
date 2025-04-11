@@ -1,0 +1,15 @@
+- name: Webhook Events
+  hosts: localhost
+  sources:
+    - ansible.eda.webhook:
+        host: 0.0.0.0
+        port: 5001
+  rules:
+    - name: Trigger Example Playbook on demand
+      condition:
+        all:
+          - event.payload.repository.name == "aap-gitops"
+      action:
+        run_job_template:
+          name: aap-config-cr
+          organization: Default
