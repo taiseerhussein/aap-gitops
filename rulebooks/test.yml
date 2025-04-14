@@ -2,8 +2,8 @@
   hosts: localhost
   sources:
     - ansible.eda.webhook:
-        host: localhost
-        port: 5001
+        host: 0.0.0.0
+        port: 5000
   rules:
     - name: Trigger Example Playbook on demand
       condition:
