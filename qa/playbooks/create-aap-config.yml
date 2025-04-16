@@ -13,9 +13,9 @@
       ansible.platform.organization:
         name: "{{ item.name }}"
         description: "{{ item.description }}"
-        gateway_hostname: "{{ gateway_hostname | default(omit, true) }}"
-        gateway_username: "{{ gateway_username | default(omit, true) }}"
-        gateway_password: "{{ gateway_password | default(omit, true) }}"
+        gateway_hostname: "{{ gateway_hostname }}"
+        gateway_username: "{{ gateway_username }}"
+        gateway_password: "{{ gateway_password }}"
         state: present
       loop: "{{ controller_organizations }}"
     
