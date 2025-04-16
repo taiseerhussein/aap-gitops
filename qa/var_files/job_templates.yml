@@ -9,7 +9,7 @@ controller_templates:
     playbook: terraform_aws_create.yml
     ask_variables_on_launch: true
     organization: Dev
-    execution_environment: tf
+    execution_environment: Default execution environment
     
   - name: Publish Content View
     credentials:
