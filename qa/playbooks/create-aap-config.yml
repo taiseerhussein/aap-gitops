@@ -3,7 +3,7 @@
   hosts: localhost
   gather_facts: false
   vars:
-    validate_certs: false
+    gateway_validate_certs: false
   vars_files:
     - ../var_files/orgs.yml
     - ../var_files/teams.yml
