@@ -10,14 +10,14 @@
   
   tasks:
     - name: Create organizations
-      ansible.controller.organization:
+      ansible.platform.organization:
         name: "{{ item.name }}"
         description: "{{ item.description }}"
         state: present
       loop: "{{ controller_organizations }}"
     
     - name: Create Teams
-      ansible.controller.team:
+      ansible.platform.team:
         name: "{{ item.name }}"
         description: "{{ item.description }}"
         organization: "{{ item.organization }}"
@@ -25,7 +25,7 @@
       loop: "{{ controller_teams }}"
 
     - name: Create Projects
-      ansible.controller.project:
+      ansible.platform.project:
         name: "{{ item.name }}"
         description: "{{ item.description }}"
         organization: "{{ item.organization }}"
@@ -38,7 +38,7 @@
       loop: "{{ controller_projects }}"
 
     - name: Creating Job Templates
-      ansible.controller.job_template:
+      ansible.platform.job_template:
         name: "{{ item.name }}"
         organization: "{{ item.organization }}"
         job_type: "{{ item.job_type }}"
