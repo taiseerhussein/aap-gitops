@@ -37,15 +37,15 @@
     #     scm_url: "{{ item.scm_url }}"
     #   loop: "{{ controller_projects }}"
 
-    - name: Creating Job Templates
-      ansible.platform.job_template:
-        name: "{{ item.name }}"
-        organization: "{{ item.organization }}"
-        job_type: "{{ item.job_type }}"
-        inventory: "{{ item.inventory }}"
-        project: "{{ item.project }}"
-        execution_environment: "{{ item.execution_environment }}"
-        playbook: "{{ item.playbook }}"
-        credentials: "{{ item.credentials }}"
-        state: present
-      loop: "{{ controller_templates }}"
+    # - name: Creating Job Templates
+    #   ansible.platform.job_template:
+    #     name: "{{ item.name }}"
+    #     organization: "{{ item.organization }}"
+    #     job_type: "{{ item.job_type }}"
+    #     inventory: "{{ item.inventory }}"
+    #     project: "{{ item.project }}"
+    #     execution_environment: "{{ item.execution_environment }}"
+    #     playbook: "{{ item.playbook }}"
+    #     credentials: "{{ item.credentials }}"
+    #     state: present
+    #   loop: "{{ controller_templates }}"
