@@ -2,6 +2,8 @@
 - name: Playbook for testing
   hosts: localhost
   gather_facts: false
+  vars:
+    validate_certs: false
   vars_files:
     - ../var_files/orgs.yml
     - ../var_files/teams.yml
