@@ -5,10 +5,8 @@
         host: 0.0.0.0
         port: 5000
   rules:
-    - name: Trigger Example Playbook on demand
-      condition:
-        all:
-          - event.payload.repository.name == "aap-gitops"
+    - name: Say Hello
+      condition: event.payload.message == "Ansible is super cool"
       action:
         run_job_template:
           name: aap-config-cr
