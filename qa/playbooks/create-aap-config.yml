@@ -5,11 +5,11 @@
   vars:
     gateway_validate_certs: false
   vars_files:
-    - ../var_files/orgs.yml
-    - ../var_files/teams.yml
-    - ../var_files/projects.yml
-    - ../var_files/job_templates.yml
-    - ../var_files/platform-info.yml
+    - ../var_files/create-config/orgs.yml
+    - ../var_files/create-config/teams.yml
+    - ../var_files/create-config/projects.yml
+    - ../var_files/create-config/job_templates.yml
+    - ../var_files/common/platform-info.yml
   roles:
     - ../../roles/create-aap-config
   

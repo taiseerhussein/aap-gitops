@@ -5,10 +5,10 @@
   vars:
     gateway_validate_certs: false
   vars_files:
-    - ../var_files/orgs.yml
-    - ../var_files/teams.yml
-    - ../var_files/projects.yml
-    - ../var_files/job_templates.yml
-    - ../var_files/platform-info.yml
+    - ../var_files/delete-config/orgs.yml
+    - ../var_files/delete-config/teams.yml
+    - ../var_files/delete-config/projects.yml
+    - ../var_files/delete-config/job_templates.yml
+    - ../var_files/common/platform-info.yml
   roles:
     - ../../roles/delete-aap-config
