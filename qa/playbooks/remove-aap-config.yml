@@ -2,6 +2,8 @@
 - name: Playbook for testing
   hosts: localhost
   gather_facts: false
+  vars:
+    gateway_validate_certs: false
   vars_files:
     - ../var_files/orgs.yml
     - ../var_files/teams.yml
@@ -26,11 +28,13 @@
       ansible.platform.team:
         name: "{{ item.name }}"
         organization: "{{ item.organization }}"
+        gateway_validate_certs: "{{ gateway_validate_certs }}"
         state: absent
       loop: "{{ controller_teams }}"
 
     - name: Delete organizations
       ansible.platform.organization:
         name: "{{ item.name }}"
+        gateway_validate_certs: "{{ gateway_validate_certs }}"
         state: absent
       loop: "{{ controller_organizations }}"
