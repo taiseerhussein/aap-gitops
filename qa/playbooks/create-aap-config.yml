@@ -11,7 +11,7 @@
     - ../var_files/job_templates.yml
     - ../var_files/platform-info.yml
   roles:
-    - create-aap-config
+    - ../../roles/create-aap-config
   # tasks:
   #   - name: Create organizations
   #     ansible.platform.organization:
