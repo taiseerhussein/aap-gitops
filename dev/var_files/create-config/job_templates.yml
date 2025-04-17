@@ -21,7 +21,7 @@ controller_templates:
     playbook: satellite_publish.yml
     organization: Dev
     execution_environment: Default execution environment
-    state: present
+    state: absent
 
   # - name: Dynamic Inventory
   #   credentials:
