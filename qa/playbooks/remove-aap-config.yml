@@ -9,6 +9,7 @@
     - ../var_files/teams.yml
     - ../var_files/projects.yml
     - ../var_files/job_templates.yml
+    - ../var_files/platform-info.yml
   
   tasks:
 
@@ -30,6 +31,9 @@
       ansible.platform.team:
         name: "{{ item.name }}"
         organization: "{{ item.organization }}"
+        gateway_hostname: "{{ gateway_hostname }}"
+        gateway_username: "{{ gateway_username }}"
+        gateway_password: "{{ gateway_password }}"
         gateway_validate_certs: "{{ gateway_validate_certs }}"
         state: absent
       loop: "{{ controller_teams }}"
@@ -37,6 +41,9 @@
     - name: Delete organizations
       ansible.platform.organization:
         name: "{{ item.name }}"
+        gateway_hostname: "{{ gateway_hostname }}"
+        gateway_username: "{{ gateway_username }}"
+        gateway_password: "{{ gateway_password }}"
         gateway_validate_certs: "{{ gateway_validate_certs }}"
         state: absent
       loop: "{{ controller_organizations }}"
