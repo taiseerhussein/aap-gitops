@@ -23,14 +23,14 @@
       loop: "{{ controller_projects }}"
 
     - name: Delete Teams
-      ansible.controller.team:
+      ansible.platform.team:
         name: "{{ item.name }}"
         organization: "{{ item.organization }}"
         state: absent
       loop: "{{ controller_teams }}"
 
     - name: Delete organizations
-      ansible.controller.organization:
+      ansible.platform.organization:
         name: "{{ item.name }}"
         state: absent
       loop: "{{ controller_organizations }}"
