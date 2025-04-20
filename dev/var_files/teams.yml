@@ -3,7 +3,7 @@ controller_teams:
   - name: DevOps
     description: Development Operations Team
     organization: Dev
-    state: absent
+    state: present
   - name: NetOps
     description: Network Operations Team
     organization: Dev
@@ -23,7 +23,7 @@ controller_teams:
   - name: Integrations
     description: Services Integration Team
     organization: Dev
-    state: absent
+    state: present
   - name: test
     description: Services test Team
     organization: Dev
