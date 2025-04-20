@@ -9,6 +9,6 @@
     - name: Say Hello
       condition: event.meta.headers is defined
       action:
-        run_job_template:
+        run_workflow_template:
           name: aap-config-cr
           organization: Default
