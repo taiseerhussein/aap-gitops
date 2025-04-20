@@ -6,7 +6,7 @@
         host: 0.0.0.0
         port: 5000
   rules:
-    - name: Say Hello
+    - name: Git Hub Commit
       condition: event.meta.headers is defined
       action:
         run_workflow_template:
