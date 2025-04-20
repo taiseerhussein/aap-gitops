@@ -7,7 +7,7 @@
         port: 5000
   rules:
     - name: Say Hello
-      condition: event.meta.headers.X_Gitea_Event == "push"
+      condition: event.meta.headers is defined
       action:
         run_job_template:
           name: aap-config-cr
