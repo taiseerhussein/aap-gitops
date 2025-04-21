@@ -3,11 +3,11 @@ controller_teams:
   - name: DevOps
     description: Development Operations Team
     organization: Dev
-    state: absent
+    state: present
   - name: NetOps
     description: Network Operations Team
     organization: Dev
-    state: present
+    state: absent
   - name: SysOps
     description: Platform Operations Team
     organization: Dev
