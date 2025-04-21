@@ -12,3 +12,6 @@ controller_organizations:
   - name: my-test-org
     description: This is a test org
     state: present
+  - name: my-test-org-2
+    description: This is a test org 2
+    state: present
