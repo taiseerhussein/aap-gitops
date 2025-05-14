@@ -11,6 +11,4 @@
       action:
         run_workflow_template:
           name: gitops-wf
-
-
           organization: Default
