@@ -9,6 +9,6 @@
     - name: Git Hub Commit
       condition: event.meta.headers is defined
       action:
-        run_workflow_template:
-          name: aap-config-cr
+        run_job_template:
+          name: gitops
           organization: Default
