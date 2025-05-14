@@ -1,0 +1,5 @@
+File \"/usr/lib/python3.11/site-packages/redis/cluster.py\", line 1308, in __init__", "    
+self.initialize()", "  
+File \"/usr/lib/python3.11/site-packages/redis/cluster.py\", line 1595, in initialize", "    
+self.default_node = self.get_nodes_by_server_type(PRIMARY)[0]", 
+"IndexError: list index out of range"], "stdout": "", "stdout_lines": []}
