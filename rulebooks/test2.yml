@@ -10,5 +10,7 @@
       condition: event.meta.headers is defined
       action:
         run_workflow_template:
-          name: gitops
+          name: gitops-wf
+
+
           organization: Default
