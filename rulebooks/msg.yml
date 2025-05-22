@@ -11,6 +11,7 @@
     - name: Say Hello
       condition: event.payload.message == "Ansible is super cool"
   ## Define the action we should take should the condition be met
-      action:
-        run_job_template::
-          name: Demo_Job_Template
+      actions:
+        - run_job_template:
+            name: Demo_Job_Template
+            organization: Default
