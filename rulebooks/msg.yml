@@ -18,5 +18,5 @@
       condition: event.payload.test == "Ansible"
       actions:
         - run_job_template:
-            name: Demo_Job_Template
+            name: Demo_Job_Template_2
             organization: Default
