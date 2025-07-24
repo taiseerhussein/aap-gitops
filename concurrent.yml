@@ -4,4 +4,4 @@
     - debug:
         msg: "Hello from job {{ inventory_hostname }}"
     - pause:
-        seconds: 60
+        seconds: 30
