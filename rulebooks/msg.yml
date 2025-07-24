@@ -14,6 +14,7 @@
         - run_job_template:
             name: Demo_Job_Template
             organization: Default
+            execution_strategy: run_all
   #  - name: Rule 2
   #    condition: event.payload.test == "Ansible"
   #    actions:
