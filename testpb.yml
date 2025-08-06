@@ -10,4 +10,4 @@
 
     - name: Show full_payload value
       debug:
-        msg: "{{ full_payload.payload.message }}
+        msg: "{{ full_payload.payload.message }}"
