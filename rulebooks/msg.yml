@@ -1,19 +1,18 @@
 ---
-- name: Webhook to AAP Job
+- name: Minimal Test Rulebook
   hosts: localhost
   sources:
     - ansible.eda.webhook:
         host: 0.0.0.0
         port: 5000
+
   rules:
-    - name: Test Payload to Job
+    - name: Match and pass var
       condition: event.payload.message == "Ansible is super cool"
       actions:
-        - print_event:
-            pretty: true
         - run_job_template:
             name: Demo_Job_Template
             organization: Default
             job_args:
               extra_vars:
-                full_payload: "{{ event.payload.get('message', 'not-found') }}"
+                full_payload: "{{ event.payload.message }}"
