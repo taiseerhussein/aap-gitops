@@ -1,8 +1,13 @@
 ---
-- name: Print the payload
+- name: Test full_payload from EDA
   hosts: localhost
   gather_facts: false
+
   tasks:
-    - name: Show payload
+    - name: Set default if full_payload not defined
+      set_fact:
+        full_payload: "{{ full_payload | default('NOT_SET') }}"
+
+    - name: Show full_payload value
       debug:
-        msg: "Payload message: {{ full_payload }}"
+        var: full_payload

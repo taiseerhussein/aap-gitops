@@ -1,17 +1,19 @@
 ---
-- name: Webhook to AAP
+- name: Webhook to AAP Job
   hosts: localhost
   sources:
     - ansible.eda.webhook:
         host: 0.0.0.0
         port: 5000
   rules:
-    - name: Trigger job when message is correct
+    - name: Test Payload to Job
       condition: event.payload.message == "Ansible is super cool"
       actions:
+        - print_event:
+            pretty: true
         - run_job_template:
             name: Demo_Job_Template
             organization: Default
             job_args:
               extra_vars:
-                full_payload: "{{ event.payload.get('message', 'Not Found') }}"
+                full_payload: "{{ event.payload.get('message', 'not-found') }}"
