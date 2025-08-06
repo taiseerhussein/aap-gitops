@@ -10,11 +10,20 @@
   rules:
     - name: Say Hello
       condition: event.payload.message == "Ansible is super cool"
-  ## Define the action we should take should the condition be met
       actions:
         - run_job_template:
             name: Demo_Job_Template
             organization: Default
+<<<<<<< HEAD
             job_args:
               extra_vars:
                 taiseer: "{{ event.payload }}"
+=======
+            # execution_strategy: run_all
+  #  - name: Rule 2
+  #    condition: event.payload.test == "Ansible"
+  #    actions:
+  #      - run_job_template:
+  #          name: Demo_Job_Template_2
+  #          organization: Default
+>>>>>>> df44ccd88e2ddf921a3ffabc5b63af1b766ec44a

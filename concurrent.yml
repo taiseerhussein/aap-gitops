@@ -1,0 +1,7 @@
+- name: Concurrent Test
+  hosts: localhost
+  tasks:
+    - debug:
+        msg: "Hello from job {{ inventory_hostname }}"
+    - pause:
+        seconds: 30
