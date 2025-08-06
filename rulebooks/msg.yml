@@ -16,4 +16,4 @@
             organization: Default
             job_args:
               extra_vars:
-                full_payload: "{{ event.payload }}"
+                full_payload: "{{ event.payload.message }}"

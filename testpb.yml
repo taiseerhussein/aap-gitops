@@ -6,5 +6,5 @@
 
   tasks:
     - name: "Print payload"
-      debug:
+      ansible.builtin.debug:
         msg: "payload: {{ full_payload }}"
