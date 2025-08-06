@@ -7,4 +7,4 @@
   tasks:
     - name: "Print payload"
       ansible.builtin.debug:
-        msg: "payload: {{ full_payload }}"
+        var: full_payload
