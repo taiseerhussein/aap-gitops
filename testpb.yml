@@ -5,6 +5,6 @@
   connection: local
 
   tasks:
-    - name: "Time date"
+    - name: "Print payload"
       debug:
-        msg: "Current time: {{ taiseer }}"
+        msg: "payload: {{ full_payload }}"

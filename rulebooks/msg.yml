@@ -16,4 +16,4 @@
             organization: Default
             job_args:
               extra_vars:
-                taiseer: "{{ event.payload }}"
+                full_payload: "{{ event.payload }}" 
