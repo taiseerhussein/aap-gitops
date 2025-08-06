@@ -15,4 +15,4 @@
             name: Demo_Job_Template
             organization: Default
             extra_vars:
-              full_payload: "{{ event.payload }}" 
+              full_payload: "{{ event.payload }}"
