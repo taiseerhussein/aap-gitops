@@ -1,10 +1,8 @@
 ---
-- name: "Definitive Timezone Diagnostic Playbook"
+- name: Print the payload
   hosts: localhost
-  gather_facts: true
-  connection: local
-
+  gather_facts: false
   tasks:
-    - name: "Print payload"
-      ansible.builtin.debug:
-        var: full_payload
+    - name: Show payload
+      debug:
+        msg: "Payload message: {{ full_payload }}"
