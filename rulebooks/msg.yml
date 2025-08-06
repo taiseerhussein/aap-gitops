@@ -13,6 +13,5 @@
         - run_job_template:
             name: Demo_Job_Template
             organization: Default
-            job_args:
-              extra_vars:
-                full_payload: "{{ event.payload.message }}"
+            extra_vars:
+              full_payload: "{{ event.payload.message }}"
