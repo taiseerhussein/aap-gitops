@@ -15,3 +15,6 @@
         - run_job_template:
             name: Demo_Job_Template
             organization: Default
+            job_args:
+              extra_vars:
+                taiseer: "{{ event.payload }}"

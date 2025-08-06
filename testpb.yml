@@ -1,0 +1,10 @@
+---
+- name: "Definitive Timezone Diagnostic Playbook"
+  hosts: localhost
+  gather_facts: true
+  connection: local
+
+  tasks:
+    - name: "Time date"
+      debug:
+        msg: "Current time: {{ taiseer }}"
