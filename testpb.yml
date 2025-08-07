@@ -4,10 +4,7 @@
   gather_facts: false
 
   tasks:
-    - name: Set default if full_payload not defined
-      set_fact:
-        full_payload: "{{ ansible_eda.event | default('NOT_SET') }}"
 
     - name: Show full_payload value
-      debug:
-        msg: "{{ full_payload.payload.message }}"
+      ansible.builtin.debug:
+        msg: "{{ ansible_eda.event.payload.message }}"
