@@ -2,9 +2,11 @@
 - name: Test full_payload from EDA
   hosts: localhost
   gather_facts: false
+  vars:
+    my_message: "{{ ansible_eda.event.payload.message }}"
 
   tasks:
 
     - name: Show full_payload value
       ansible.builtin.debug:
-        msg: "{{ ansible_eda.event.payload.message }}"
+        msg: "{{ my_message }}"
