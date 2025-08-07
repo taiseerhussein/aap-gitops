@@ -4,10 +4,14 @@
   gather_facts: false
   vars:
     my_message: "{{ ansible_eda.event.payload.message }}"
-    first_part: "{{ my_message.split(' ')[0] }}"
+    first_part1: "{{ my_message.split(' ')[0] }}"
+    first_part2: "{{ my_message.split(' ')[1] }}"
+    first_part3: "{{ my_message.split(' ')[2] }}"
+    first_part4: "{{ my_message.split(' ')[3] }}"
+    first_part5: "{{ my_message.split(' ')[4] }}"
 
   tasks:
 
     - name: Show full_payload value
       ansible.builtin.debug:
-        msg: "{{ my_message }} and {{ first_part }}"
+        msg: "{{ first_part1 }}, {{ first_part2 }}, {{ first_part3 }}, {{ first_part4 }}, {{ first_part5 }}"
