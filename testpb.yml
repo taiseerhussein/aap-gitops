@@ -16,4 +16,4 @@
 
     - name: Show full_payload value
       ansible.builtin.debug:
-        msg: "{{ first_part1 }}, {{ first_part2 }}, {{ first_part3 }}, {{ first_part4 }}"
+        msg: "{{ target_user_id }}, {{ ritm_number }}"
