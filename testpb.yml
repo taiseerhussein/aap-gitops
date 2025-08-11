@@ -8,7 +8,7 @@
     # first_part2: "{{ my_message.split(' ')[1] }}"
     # first_part3: "{{ my_message.split(' ')[2] }}"
     # first_part4: "{{ my_message.split(' ')[3] }}"
-    target_user_id: "{{ my_message | regex_search('^\\S+@\\S+\\.\\S+$', '\\1')|first }}"
+    target_user_id: "{{ my_message | regex_search('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}') }}"
     ritm_number: "{{ my_message | regex_search('RITM(\\d+)', '\\1')| first }}"
    # first_part5: "{{ my_message.split(' ')[4] }}"
 
