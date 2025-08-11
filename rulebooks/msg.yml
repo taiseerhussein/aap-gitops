@@ -8,7 +8,7 @@
 
   rules:
     - name: Match and pass var
-      condition: event.payload.message == "Ansible is super cool"
+      condition: true
       actions:
         - run_job_template:
             name: Demo_Job_Template

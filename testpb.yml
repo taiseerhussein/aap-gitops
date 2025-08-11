@@ -4,10 +4,12 @@
   gather_facts: false
   vars:
     my_message: "{{ ansible_eda.event.payload.message }}"
-    first_part1: "{{ my_message.split(' ')[0] }}"
-    first_part2: "{{ my_message.split(' ')[1] }}"
-    first_part3: "{{ my_message.split(' ')[2] }}"
-    first_part4: "{{ my_message.split(' ')[3] }}"
+    # first_part1: "{{ my_message.split(' ')[0] }}"
+    # first_part2: "{{ my_message.split(' ')[1] }}"
+    # first_part3: "{{ my_message.split(' ')[2] }}"
+    # first_part4: "{{ my_message.split(' ')[3] }}"
+    target_user_id: "{{ my_message | regex_search('^\\S+@\\S+\\.\\S+$') }}"
+    ritm_number: "{{ my_message | regex_search('RITM(\\d+)', '\\1')| first }}"
    # first_part5: "{{ my_message.split(' ')[4] }}"
 
   tasks:
