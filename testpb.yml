@@ -9,7 +9,7 @@
     # first_part3: "{{ my_message.split(' ')[2] }}"
     # first_part4: "{{ my_message.split(' ')[3] }}"
     target_user_id: "{{ my_message | regex_search('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}') }}"
-    ritm_number: "{{ my_message | regex_search('RITM\\d+')| first }}"
+    ritm_number: "{{ my_message | regex_search('RITM\\d+') }}"
    # first_part5: "{{ my_message.split(' ')[4] }}"
 
   tasks:
