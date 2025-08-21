@@ -1,0 +1,33 @@
+---
+- name: "Definitive Timezone Diagnostic Playbook"
+  hosts: localhost
+  gather_facts: true
+  connection: local
+
+  tasks:
+    - name: "Time date"
+      debug:
+        msg: "Current time: {{ ansible_date_time.iso8601_basic_short }}"
+
+    - name: Display original UTC time from Ansible facts
+      ansible.builtin.debug:
+        msg: "Current UTC time (from facts): {{ ansible_date_time.iso8601 }}"
+
+    - name: ISO 8601 datetime in local timezone
+      ansible.builtin.debug:
+        msg: "epicrpt-{{ lookup('pipe', 'TZ=US/Central date +%Y%m%dT%H%M%S') }}-val"
+    
+    - name: Eastern time zone
+      ansible.builtin.debug:
+        msg: "epicrpt-{{ lookup('pipe', 'TZ=US/Eastern date +%Y%m%dT%H%M%S') }}-val"
+        # US/Eastern
+    
+    - name: Eastern time zone (1 - 12)
+      ansible.builtin.debug:
+        msg: "epicrpt-{{ lookup('pipe', 'TZ=US/Eastern date +%Y%m%dT%I%M%S%p') }}-val"
+        # US/Eastern
+    
+    - name: Format now() to ISO 8601 basic
+      debug:
+        msg: "{{ now().strftime('%Y%m%dT%H%M%S') }}"
+

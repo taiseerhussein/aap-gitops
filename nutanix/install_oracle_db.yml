@@ -1,0 +1,97 @@
+---
+- name: 2. Prepare OS and Install Oracle Software
+  hosts: oracle_servers
+  become: yes
+  vars:
+    oracle_software_url: "http://your-web-server/LINUX.X64_193000_db_home.zip"
+    oracle_rsp_file: "db_install.rsp" # This file should be in a 'templates' folder
+    oracle_base: "/u01/app/oracle"
+    oracle_home: "/u01/app/oracle/product/19.0.0/dbhome_1"
+    oracle_inventory: "/u01/app/oraInventory"
+
+  tasks:
+    - name: Install Oracle pre-requisite packages on RHEL 9
+      ansible.builtin.dnf:
+        name:
+          - bc
+          - binutils
+          - compat-openssl11
+          - elfutils-libelf
+          - glibc
+          - glibc-devel
+          - ksh
+          - libaio
+          - libaio-devel
+          - libgcc
+          - libnsl
+          - libstdc++
+          - libxcrypt-compat
+          - make
+          - smartmontools
+          - sysstat
+        state: present
+
+    - name: Create Oracle groups
+      ansible.builtin.group:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - oinstall
+        - dba
+
+    - name: Create the oracle user
+      ansible.builtin.user:
+        name: oracle
+        comment: "Oracle Software Owner"
+        groups: oinstall,dba
+        shell: /bin/bash
+
+    - name: Create Oracle directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: oracle
+        group: oinstall
+        mode: '0775'
+      loop:
+        - "{{ oracle_base }}"
+        - "{{ oracle_home }}"
+        - "{{ oracle_inventory }}"
+        - "/u01/stage" # Staging area for software
+
+    - name: Download and Unarchive Oracle Software
+      ansible.builtin.unarchive:
+        src: "{{ oracle_software_url }}"
+        dest: "/u01/stage"
+        owner: oracle
+        group: oinstall
+        mode: '0775'
+        remote_src: yes
+        creates: "/u01/stage/runInstaller"
+
+    - name: Template the response file for silent installation
+      ansible.builtin.template:
+        src: "{{ oracle_rsp_file }}.j2"
+        dest: "/u01/stage/{{ oracle_rsp_file }}"
+        owner: oracle
+        group: oinstall
+
+    - name: Run Oracle Installer Silently
+      become_user: oracle
+      ansible.builtin.command:
+        cmd: >
+          /u01/stage/runInstaller -silent -waitforcompletion
+          -responseFile /u01/stage/{{ oracle_rsp_file }}
+          -ignorePrereqFailure
+      args:
+        creates: "{{ oracle_home }}/root.sh"
+
+    - name: Run orainstRoot.sh script
+      ansible.builtin.command: "{{ oracle_inventory }}/orainstRoot.sh"
+      args:
+        creates: /etc/oraInst.loc
+
+    - name: Run root.sh script
+      ansible.builtin.command: "{{ oracle_home }}/root.sh"
+      args:
+        creates: /usr/local/bin/dbhome

@@ -1,0 +1,56 @@
+- name: 1. Provision RHEL 9 VM for Oracle on Nutanix
+  hosts: localhost
+  gather_facts: no
+  collections:
+    - nutanix.ncp
+  vars_prompt:
+    - name: nutanix_user
+      prompt: "Enter your Nutanix Prism Central username"
+      private: no
+    - name: nutanix_password
+      prompt: "Enter your Nutanix Prism Central password"
+  vars:
+    nutanix_host: 'your-prism-central-ip-or-fqdn'
+    vm_name: 'oracle-db-rhel9-01'
+    cluster_name: 'Your-Nutanix-Cluster'
+    image_name: 'RHEL9-Template'
+    subnet_name: 'Your-VM-Network'
+
+  tasks:
+    - name: Create the Oracle VM on Nutanix AHV
+      nutanix.ncp.vms:
+        state: 'present'
+        prism_central:
+          hostname: "{{ nutanix_host }}"
+          username: "{{ nutanix_user }}"
+          password: "{{ nutanix_password }}"
+          port: 9440
+          validate_certs: false
+        spec:
+          name: "{{ vm_name }}"
+          cluster: "{{ cluster_name }}"
+          resources:
+            power_state: 'ON'
+            num_vcpus_per_socket: 2
+            num_sockets: 2
+            memory_size_mib: 16384 # 16 GB
+            disk_list:
+              - device_properties:
+                  device_type: 'DISK'
+                disk_size_mib: 122880 # 120 GB
+          image: "{{ image_name }}"
+          nic_list:
+            - subnet: "{{ subnet_name }}"
+      register: new_vm_details
+
+    - name: Add the new VM to our inventory
+      ansible.builtin.add_host:
+        name: "{{ vm_name }}"
+        ansible_host: "{{ new_vm_details.vms[0].spec.resources.nic_list[0].ip_endpoint_list[0].ip }}"
+        groups: oracle_servers
+
+    - name: Wait for SSH to become available on the new VM
+      ansible.builtin.wait_for_connection:
+        delay: 15
+        timeout: 300
+      delegate_to: "{{ vm_name }}"
