@@ -32,7 +32,7 @@
     - name: Example - Create a new tablespace
       community.oracle.oracle_sql:
         username: "SYS"
-        password: "YourSysPassword" # Use Ansible Vault
+        password: "{{ YourSysPassword }}" # Use Ansible Vault
         service_name: "YOURDB.yourdomain.com"
         mode: "sysdba"
         script: "CREATE TABLESPACE users DATAFILE '/u01/app/oracle/oradata/YOURDB/users01.dbf' SIZE 100M;"
