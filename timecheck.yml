@@ -13,6 +13,16 @@
     - name: Tag resource with date
       debug:
         msg: "Tagging with {{ ansible_date_time.date }}"
+    
+    - name: Using lookup('pipe','date')
+      set_fact:
+        local_time_12h: "{{ lookup('pipe', 'date +\"%I:%M:%S %p\"') }}"
+    - debug:
+        msg: "Time from date cmd: {{ local_time_12h }}"
+
+    - name: Using ansible_date_time with Jinja
+      debug:
+        msg: "Time from facts: {{ ansible_date_time.iso8601 | to_datetime | strftime('%I:%M:%S %p') }}"
 
     # - name: "Time date"
     #   debug:
