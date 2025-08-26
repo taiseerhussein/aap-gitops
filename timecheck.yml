@@ -20,10 +20,6 @@
     - debug:
         msg: "Time from date cmd: {{ local_time_12h }}"
 
-    - name: 12h from ansible_date_time.time
-      debug:
-        msg: "{{ ansible_date_time.time | strptime('%H:%M:%S') | strftime('%I:%M:%S %p') }}"
-
     # - name: "Time date"
     #   debug:
     #     msg: "Current time: {{ ansible_date_time.iso8601_basic_short }}"
@@ -36,10 +32,10 @@
     #   ansible.builtin.debug:
     #     msg: "epicrpt-{{ lookup('pipe', 'TZ=US/Central date +%Y%m%dT%H%M%S') }}-val"
     
-    # - name: Eastern time zone
-    #   ansible.builtin.debug:
-    #     msg: "epicrpt-{{ lookup('pipe', 'TZ=US/Eastern date +%Y%m%dT%H%M%S') }}-val"
-    #     # US/Eastern
+    - name: time in 12 format
+      ansible.builtin.debug:
+        msg: "epicrpt-{{ lookup('pipe', 'date +%Y%m%dT%H%M%S') }}-val"
+        # US/Eastern
     
     # - name: Eastern time zone (1 - 12)
     #   ansible.builtin.debug:
