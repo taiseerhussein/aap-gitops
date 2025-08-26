@@ -53,5 +53,5 @@
     
     - name: Format now() to ISO 8601 basic
       debug:
-        msg: "{{ now().strftime('%Y%m%dT%I%M%S') }}"
+        msg: "epicrpt-{{ now().strftime('%Y%m%dT%I%M%S') }}-val"
 
