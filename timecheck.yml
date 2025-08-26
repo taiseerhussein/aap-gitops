@@ -20,9 +20,9 @@
     - debug:
         msg: "Time from date cmd: {{ local_time_12h }}"
 
-    - name: Using ansible_date_time with Jinja
+    - name: 12h from ansible_date_time.time
       debug:
-        msg: "Time from facts: {{ ansible_date_time.iso8601 | to_datetime | strftime('%I:%M:%S %p') }}"
+        msg: "{{ ansible_date_time.time | strptime('%H:%M:%S') | strftime('%I:%M:%S %p') }}"
 
     # - name: "Time date"
     #   debug:
