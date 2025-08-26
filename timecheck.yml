@@ -39,7 +39,7 @@
 
     - name: Read EE local time already formatted as 12-hour
       set_fact:
-        time_12h: "{{ lookup('pipe', 'date + %I:%M:%S %p') }}"
+        time_12h: "{{ lookup('pipe', 'date +%I:%M:%S %p') }}"
 
     - name: Show it
       debug:
