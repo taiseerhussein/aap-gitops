@@ -34,7 +34,7 @@
     
     - name: time in 12 format
       ansible.builtin.debug:
-        msg: "epicrpt-{{ lookup('pipe', 'date +%Y%m%dT%H%M%S%p') }}-val"
+        msg: "epicrpt-{{ lookup('pipe', 'date +%Y%m%dT%I%M%S%p') }}-val"
         # US/Eastern
 
     - name: Read EE local time already formatted as 12-hour
