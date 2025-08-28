@@ -1,0 +1,8 @@
+collections:
+  - name: azure.azcollection
+    version: ">=1.10.0"
+  - name: community.general
+  - name: ansible.windows
+  - name: community.vmware
+  - name: vmware.vmware
+  - name: amazon.aws
