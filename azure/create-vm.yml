@@ -1,0 +1,70 @@
+- name: Create VMs
+  hosts: localhost
+  connection: local
+  vars_files:
+    - vm-info.yml
+  vars:
+    azure_location: "eastus"
+    rg_name: "eastus"
+    vnet_name: "eda"
+    vnet_cidr: "10.0.0.0/24"
+
+    subnets:
+      - { name: "frontend", cidr: "10.0.1.0/24" }
+      - { name: "backend",  cidr: "10.0.2.0/24" }
+
+    nsg_name: "openenv-xmrhf"
+    # Define full NSG rules (typical SSH example). Add more rules as needed.
+    nsg_rules:
+      - name: AllowSSH
+        protocol: Tcp
+        destination_port_range: 22
+        access: Allow
+        priority: 1001
+        direction: Inbound
+        source_address_prefix: "*"   # lock this down in production
+
+    admin_username: "azureuser"
+    vm_definitions:
+      - name: "vm-front-01"
+        subnet: "frontend"
+        vm_size: "Standard_DS1_v2"
+        public_ip: true
+        image:
+          publisher: Canonical
+          offer: "0001-com-ubuntu-server-jammy"
+          sku: "22_04-lts"
+          version: latest
+        tags: { env: "dev", role: "web" }
+  tasks:
+    - name: Create virtual machines
+      azure.azcollection.azure_rm_virtualmachine:
+        resource_group: "{{ rg_name }}"
+        name: "{{ item.name }}"
+        vm_size: "{{ item.vm_size }}"
+        admin_username: "{{ admin_username }}"
+        ssh_password_enabled: false
+        ssh_public_keys:
+          - path: "/home/{{ admin_username }}/.ssh/authorized_keys"
+            key_data: "{{ vm_pub_key }}"
+        network_interfaces: "{{ item.name }}-nic"
+        image: "{{ item.image }}"
+        tags: "{{ item.tags | default({}) }}"
+        state: present
+      loop: "{{ vm_definitions }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Collect public IPs (optional)
+      azure.azcollection.azure_rm_publicipaddress_info:
+        resource_group: "{{ rg_name }}"
+      register: pip_info
+
+    - name: Show connection info
+      ansible.builtin.debug:
+        msg: >-
+          {{ item.name }} => {{
+            (pip_info.publicipaddresses | selectattr('name','equalto', item.name ~ '-pip') | list | first).ip_address
+            | default('no public ip')
+          }}
+      loop: "{{ vm_definitions }}"
