@@ -9,6 +9,11 @@
         instance_type: t3.micro
         image_id: ami-0f70b01eb0d5c5caa
         region: us-east-2
+        network:
+          - subnet_id: subnet-035917246f90c36a4
+            assign_public_ip: true
+            security_groups:
+              - sg-0f470fb96d245f4fc
         wait: true
       register: ec2_out
 
