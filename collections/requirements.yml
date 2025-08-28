@@ -1,7 +1,7 @@
 collections:
   - name: community.general
-    validate_certs: false
   - name: ansible.windows
   - name: community.vmware
   - name: vmware.vmware
   - name: amazon.aws
+  - name: azure.azcollection
