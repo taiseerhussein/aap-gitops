@@ -1,0 +1,29 @@
+---
+- name: Import image into Nutanix Image Service (from HTTPS URL)
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  collections: [nutanix.ncp]
+
+  vars:
+    nutanix_host: "{{ lookup('env','NTNX_HOST') }}"
+    nutanix_username: "{{ lookup('env','NTNX_USER') }}"
+    nutanix_password: "{{ lookup('env','NTNX_PASS') }}"
+    validate_certs: false
+
+    # image inputs
+    image_name: "rhel-8.8-gold"
+    image_type: "DISK_IMAGE"     # or ISO_IMAGE
+    source_uri: "https://s3.example.com/images/rhel-8.8.qcow2?X-Amz-Algorithm=..."
+
+  tasks:
+    - name: Ensure image exists in Nutanix Image Service (URL import)
+      nutanix.ncp.ntnx_images:
+        state: present
+        nutanix_host: "{{ nutanix_host }}"
+        nutanix_username: "{{ nutanix_username }}"
+        nutanix_password: "{{ nutanix_password }}"
+        validate_certs: "{{ validate_certs }}"
+        name: "{{ image_name }}"
+        image_type: "{{ image_type }}"
+        source_uri: "{{ source_uri }}"
