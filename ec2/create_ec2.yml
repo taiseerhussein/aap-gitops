@@ -1,0 +1,18 @@
+- name: Provision EC2
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Launch EC2 instance
+      amazon.aws.ec2_instance:
+        name: my-ec2-instance
+        key_name: ec2-key
+        instance_type: t3.micro
+        image_id: ami-0f70b01eb0d5c5caa
+        region: us-east-2
+        wait: true
+      register: ec2_out
+
+    - name: Save new instance DNS
+      set_stats:
+        data:
+          new_ec2_dns: "{{ ec2_out.instances[0].public_dns_name }}"
