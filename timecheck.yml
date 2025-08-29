@@ -14,48 +14,48 @@
         src: /etc/hosts
         dest: "/tmp/hosts-backup-{{ ansible_date_time.iso8601_basic }}"
 
-    - name: Tag resource with date
-      debug:
-        msg: "Tagging with {{ ansible_date_time.date }}"
-    
-    - name: Using lookup('pipe','date')
-      set_fact:
-        local_time_12h: "{{ lookup('pipe', 'date +\"%I:%M:%S %p\"') }}"
-    - debug:
-        msg: "Time from date cmd: {{ local_time_12h }}"
-
-    # - name: "Time date"
+    # - name: Tag resource with date
     #   debug:
-    #     msg: "Current time: {{ ansible_date_time.iso8601_basic_short }}"
-
-    # - name: Display original UTC time from Ansible facts
-    #   ansible.builtin.debug:
-    #     msg: "Current UTC time (from facts): {{ ansible_date_time.iso8601 }}"
-
-    # - name: ISO 8601 datetime in local timezone
-    #   ansible.builtin.debug:
-    #     msg: "epicrpt-{{ lookup('pipe', 'TZ=US/Central date +%Y%m%dT%H%M%S') }}-val"
+    #     msg: "Tagging with {{ ansible_date_time.date }}"
     
-    - name: time in 12 format
-      ansible.builtin.debug:
-        msg: "epicrpt-{{ lookup('pipe', 'date +%Y%m%dT%I%M%S%p') }}-val"
-        # US/Eastern
+    # - name: Using lookup('pipe','date')
+    #   set_fact:
+    #     local_time_12h: "{{ lookup('pipe', 'date +\"%I:%M:%S %p\"') }}"
+    # - debug:
+    #     msg: "Time from date cmd: {{ local_time_12h }}"
 
-    - name: Read EE local time already formatted as 12-hour
-      set_fact:
-        time_12h: "{{ lookup('pipe', 'date +\"%I:%M:%S %p\"') }}"
+    # # - name: "Time date"
+    # #   debug:
+    # #     msg: "Current time: {{ ansible_date_time.iso8601_basic_short }}"
 
-    - name: Show it
-      debug:
-        msg: "{{ time_12h }}"
+    # # - name: Display original UTC time from Ansible facts
+    # #   ansible.builtin.debug:
+    # #     msg: "Current UTC time (from facts): {{ ansible_date_time.iso8601 }}"
+
+    # # - name: ISO 8601 datetime in local timezone
+    # #   ansible.builtin.debug:
+    # #     msg: "epicrpt-{{ lookup('pipe', 'TZ=US/Central date +%Y%m%dT%H%M%S') }}-val"
     
-    
-    # - name: Eastern time zone (1 - 12)
+    # - name: time in 12 format
     #   ansible.builtin.debug:
-    #     msg: "epicrpt-{{ lookup('pipe', 'TZ=US/Eastern date +%Y%m%dT%I%M%S%p') }}-val"
+    #     msg: "epicrpt-{{ lookup('pipe', 'date +%Y%m%dT%I%M%S%p') }}-val"
     #     # US/Eastern
+
+    # - name: Read EE local time already formatted as 12-hour
+    #   set_fact:
+    #     time_12h: "{{ lookup('pipe', 'date +\"%I:%M:%S %p\"') }}"
+
+    # - name: Show it
+    #   debug:
+    #     msg: "{{ time_12h }}"
     
-    - name: Format now() to ISO 8601 basic
-      debug:
-        msg: "epicrpt-{{ now().strftime('%Y%m%dT%I%M%S') }}-val"
+    
+    # # - name: Eastern time zone (1 - 12)
+    # #   ansible.builtin.debug:
+    # #     msg: "epicrpt-{{ lookup('pipe', 'TZ=US/Eastern date +%Y%m%dT%I%M%S%p') }}-val"
+    # #     # US/Eastern
+    
+    # - name: Format now() to ISO 8601 basic
+    #   debug:
+    #     msg: "epicrpt-{{ now().strftime('%Y%m%dT%I%M%S') }}-val"
 
