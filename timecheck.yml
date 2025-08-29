@@ -6,7 +6,7 @@
 
   tasks:
     - name: Prepare data
-      ansible.builtin.set_fact:
+      ansible.builtin.set_stats:
         vm_name: "aap_fe82"
 
     - name: Save backup with timestamp
