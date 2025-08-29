@@ -7,8 +7,8 @@
   tasks:
     - name: Prepare data
       ansible.builtin.set_fact:
-      vm_name: "aap_fe82"
-      
+        vm_name: "aap_fe82"
+
     - name: Save backup with timestamp
       copy:
         src: /etc/hosts
