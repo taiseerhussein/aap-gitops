@@ -1,0 +1,12 @@
+- name: Create ec2 instance
+  hosts: localhost
+  tasks:
+    - name: Create ec2 instance
+      ec2:
+        key_name: "{{ _key_name_ }}"
+        instance_type: t2.micro
+        image: ami-09d95fab7fff3776c
+        wait: yes
+        group: ansiblensg
+        count: 1
+        vpc_subnet_id: subnet-314c223d
