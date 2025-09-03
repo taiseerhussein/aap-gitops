@@ -1,5 +1,5 @@
 - name: Run ls on EC2 instance
-  hosts: "{{ new_ec2_dns }}"
+  hosts: all
   gather_facts: false
   tasks:
     - name: Run ls command
