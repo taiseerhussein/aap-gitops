@@ -27,19 +27,9 @@
       ansible.builtin.debug:
         var: new_instance
 
+# ansible.builtin.set_stats saves the paramert value globaly during 
+# the workflow execution. 
     - name: Save new instance DNS
-      set_stats:
+      ansible.builtin.set_stats:
         data:
           new_ec2_dns: "{{ ec2_out.instances[0].public_dns_name }}"
-    
-    - name: Add the new EC2 instance to inventory
-      ansible.builtin.add_host:
-        name: "{{ new_instance.public_dns_name | default(new_instance.private_dns_name) }}"
-        groups: new_ec2
-        ansible_host: "{{ new_instance.public_ip_address | default(new_instance.private_ip_address) }}"
-        ansible_user: ec2-user     # adjust depending on AMI (ubuntu, rocky, etc.)
-        instance_id: "{{ new_instance.instance_id }}"
-        private_ip: "{{ new_instance.private_ip_address }}"
-        public_ip: "{{ new_instance.public_ip_address | default('') }}"
-        region: "{{ aws_region }}"
-
