@@ -1,0 +1,11 @@
+- name: Run ls on EC2 instance
+  hosts: 192.168.0.25
+  gather_facts: false
+  tasks:
+    - name: Run ls command
+      ansible.builtin.command: ls
+      register: ls_out
+
+    - name: Show output
+      ansible.builtin.debug:
+        var: ls_out.stdout_lines
