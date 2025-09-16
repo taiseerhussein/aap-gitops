@@ -110,8 +110,8 @@
         mode: put
         object: "{{ s3_prefix }}/{{ item | basename }}"
         src: "{{ item }}"
-        acl: "{{ s3_acl }}"
-        storage_class: "{{ s3_storage_class }}"
+       # acl: "{{ s3_acl }}"
+        # storage_class: "{{ s3_storage_class }}"
         # Optional org controls:
         # server_side_encryption: aws:kms
         # sse_kms_key_id: "arn:aws:kms:REGION:ACCOUNT:key/KEY-ID"
