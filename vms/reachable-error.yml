@@ -1,6 +1,6 @@
 ---
 - name: Run with unreachable capture and final report
-  hosts: 192.168.0.25
+  hosts: connectivity-test
   gather_facts: false
   any_errors_fatal: false
 
