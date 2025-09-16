@@ -8,6 +8,14 @@
     report_dir: "/runner/project/artifacts"   # writable inside EE; downloadable from job run
     csv_report_path: "{{ report_dir }}/unreachable_report.csv"
     json_report_path: "{{ report_dir }}/unreachable_report.json"
+    summary_path: "{{ report_dir }}/summary.json"
+
+    s3_bucket: "terraform-taiseer"     # <-- change me
+    s3_region: "us-east-2"                 # <-- change me
+    s3_acl: "private"
+    s3_storage_class: "STANDARD"
+    s3_presign_expires: 86400   
+    s3_prefix: "unreachable/{{ ansible_date_time.date }}/job"
 
   pre_tasks:
     - name: Ensure report directory exists (inside EE)
@@ -76,6 +84,46 @@
         content: "{{ _unreach | to_nice_json }}"
       delegate_to: localhost
       # run_once: true
+    
+    - name: Build a one-file summary (counts, job, files)
+      ansible.builtin.copy:
+        dest: "{{ summary_path }}"
+        mode: '0644'
+        content: >-
+          {{
+            {
+              "generated_at": ansible_date_time.iso8601,
+              "job_id": job_id,
+              "unreachable_count": (_unreach | length),
+              "reports": {
+                "csv": csv_report_path | basename,
+                "json": json_report_path | basename
+              }
+            } | to_nice_json
+          }}
+      delegate_to: localhost
+      # run_once: true
+
+    - name: Upload reports to S3
+    # Requires amazon.aws collection and AWS credential/role
+      amazon.aws.s3_object:
+        bucket: "{{ s3_bucket }}"
+        region: "{{ s3_region }}"
+        mode: put
+        object: "{{ s3_prefix }}/{{ item | basename }}"
+        src: "{{ item }}"
+        acl: "{{ s3_acl }}"
+        storage_class: "{{ s3_storage_class }}"
+        # Optional org controls:
+        # server_side_encryption: aws:kms
+        # sse_kms_key_id: "arn:aws:kms:REGION:ACCOUNT:key/KEY-ID"
+      loop:
+        - "{{ csv_report_path }}"
+        - "{{ json_report_path }}"
+        - "{{ summary_path }}"
+      register: _uploads
+      delegate_to: localhost
+      run_once: true
 
     - name: Surface a summary in the job’s “Stats”
       ansible.builtin.set_stats:
