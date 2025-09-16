@@ -15,7 +15,7 @@
     s3_acl: "private"
     s3_storage_class: "STANDARD"
     s3_presign_expires: 86400   
-    s3_prefix: "unreachable/{{ ansible_date_time.date }}/job"
+    s3_prefix: "unreachable/error_report/job_123"
 
   pre_tasks:
     - name: Ensure report directory exists (inside EE)
