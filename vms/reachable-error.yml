@@ -92,8 +92,6 @@
         content: >-
           {{
             {
-              "generated_at": ansible_date_time.iso8601,
-              "job_id": job_id,
               "unreachable_count": (_unreach | length),
               "reports": {
                 "csv": csv_report_path | basename,
