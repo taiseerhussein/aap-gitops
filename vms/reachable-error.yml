@@ -1,11 +1,83 @@
-- name: Run ls on EC2 instance
+---
+- name: Run with unreachable capture and final report
   hosts: 192.168.0.25
-  gather_facts: false
-  tasks:
-    - name: Run ls command
-      ansible.builtin.command: ls
-      register: ls_out
+  gather_facts: true
+  any_errors_fatal: false
 
-    - name: Show output
-      ansible.builtin.debug:
-        var: ls_out.stdout_lines
+  vars:
+    report_dir: "/runner/project/artifacts"   # writable inside EE; downloadable from job run
+    csv_report_path: "{{ report_dir }}/unreachable_report.csv"
+    json_report_path: "{{ report_dir }}/unreachable_report.json"
+
+  pre_tasks:
+    - name: Ensure report directory exists (inside EE)
+      file:
+        path: "{{ report_dir }}"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      # run_once: true
+
+    - name: Connectivity pre-check (captures 'unreachable' early)
+        # This uses the same connection plugin your job uses.
+      block:
+        - name: Wait for connection (short, configurable)
+          ansible.builtin.wait_for_connection:
+            delay: 0
+            sleep: 2
+            timeout: 20
+          register: _conn
+      rescue:
+        - name: Aggregate unreachable info for this host
+          ansible.builtin.set_stats:
+            aggregate: true
+            data:
+              unreachable_hosts: >-
+                {{ (unreachable_hosts | default([])) +
+                   [ {
+                       "host": inventory_hostname,
+                       "msg": (_conn.msg | default('unreachable')),
+                       "exception": (_conn.exception | default('')),
+                       "elapsed": (_conn.elapsed | default(''))
+                     } ] }}
+        - name: Stop running further tasks on this host
+          ansible.builtin.meta: end_host
+
+  tasks:
+    - name: Example task that only runs on reachable hosts
+      ansible.builtin.command: /usr/bin/true
+
+  post_tasks:
+    - name: Ensure we always have the list defined
+      ansible.builtin.set_fact:
+        _unreach: "{{ unreachable_hosts | default([]) }}"
+      # run_once: true
+
+    - name: Render CSV report (readable by anyone)
+      ansible.builtin.copy:
+        dest: "{{ csv_report_path }}"
+        mode: '0644'
+        content: |
+          host,msg,elapsed
+          {% for item in _unreach %}
+          {{ item.host|replace(',', ';') }},{{ (item.msg|string)|replace('\n',' ')|replace(',', ';') }},{{ item.elapsed|default('') }}
+          {% endfor %}
+      delegate_to: localhost
+      # run_once: true
+
+    - name: Render JSON report (structured)
+      ansible.builtin.copy:
+        dest: "{{ json_report_path }}"
+        mode: '0644'
+        content: "{{ _unreach | to_nice_json }}"
+      delegate_to: localhost
+      # run_once: true
+
+    - name: Surface a summary in the job’s “Stats”
+      ansible.builtin.set_stats:
+        data:
+          unreachable_summary:
+            count: "{{ _unreach | length }}"
+            report_csv: "{{ csv_report_path }}"
+            report_json: "{{ json_report_path }}"
+      # run_once: true
