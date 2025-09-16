@@ -42,8 +42,8 @@
                      } ] }}
         - name: Use this task to write the msg to the report. 
           ansible.builtin.debug:
-            msg: {{ _conn.msg }}
-            
+            msg: "{{ _conn.msg }}"
+
         - name: Stop running further tasks on this host
           ansible.builtin.meta: end_host
 
