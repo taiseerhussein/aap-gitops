@@ -1,7 +1,7 @@
 ---
 - name: Run with unreachable capture and final report
   hosts: 192.168.0.25
-  gather_facts: true
+  gather_facts: false
   any_errors_fatal: false
 
   vars:
