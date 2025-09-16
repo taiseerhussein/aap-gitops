@@ -9,6 +9,7 @@
     csv_report_path: "{{ report_dir }}/unreachable_report.csv"
     json_report_path: "{{ report_dir }}/unreachable_report.json"
     summary_path: "{{ report_dir }}/summary.json"
+    msg_txt_file: "{{ report_dir }}/report.txt"
 
     s3_bucket: "terraform-taiseer"     # <-- change me
     s3_region: "us-east-2"                 # <-- change me
@@ -51,6 +52,13 @@
         - name: Use this task to write the msg to the report. 
           ansible.builtin.debug:
             msg: "{{ _conn.msg }}"
+        
+        - name: Render CSV report (readable by anyone)
+          ansible.builtin.copy:
+            dest: "{{ msg_txt_file }}"
+            mode: '0644'
+            content: "{{ _conn.msg }}"
+          delegate_to: localhost
 
         - name: Stop running further tasks on this host
           ansible.builtin.meta: end_host
@@ -119,6 +127,7 @@
         - "{{ csv_report_path }}"
         - "{{ json_report_path }}"
         - "{{ summary_path }}"
+        - "{{ msg_txt_file }}"
       register: _uploads
       delegate_to: localhost
       run_once: true
