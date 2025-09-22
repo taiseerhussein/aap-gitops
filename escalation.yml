@@ -8,13 +8,13 @@
         name: lvm2
         state: present
 
-    - name: Verify lock directory (created on boot, but ensure it exists)
-      file:
-        path: /run/lock/lvm
-        state: directory
-        owner: root
-        group: root
-        mode: '0755'
+    # - name: Verify lock directory (created on boot, but ensure it exists)
+    #   file:
+    #     path: /run/lock/lvm
+    #     state: directory
+    #     owner: root
+    #     group: root
+    #     mode: '0755'
 
     - name: List LVs
       command: lvs --noheadings -o lv_name,vg_name,lv_size
