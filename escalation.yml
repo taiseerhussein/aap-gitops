@@ -1,15 +1,24 @@
----
-- name: Escalation test
+- name: Ensure lvm2 present and show volumes
   hosts: ssh-test
-  gather_facts: true
- 
-
+  gather_facts: false
+  become: true           # <- important
   tasks:
+    - name: Install LVM2
+      package:
+        name: lvm2
+        state: present
 
-    - name: Print the email address
-      ansible.builtin.command: lvm lvs
-      register: mymotd
+    - name: Verify lock directory (created on boot, but ensure it exists)
+      file:
+        path: /run/lock/lvm
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
 
-    - name: Print out put 
-      ansible.builtin.debug:
-        msg: "SNOW No.: {{ mymotd }}"
+    - name: List LVs
+      command: lvs --noheadings -o lv_name,vg_name,lv_size
+      register: lvs_out
+
+    - debug:
+        var: lvs_out.stdout_lines
