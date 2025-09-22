@@ -1,0 +1,15 @@
+---
+- name: Escalation test
+  hosts: ssh-test
+  gather_facts: true
+ 
+
+  tasks:
+
+    - name: Print the email address
+      ansible.builtin.command: lvm lvs
+      register: mymotd
+
+    - name: Print out put 
+      ansible.builtin.debug:
+        msg: "SNOW No.: {{ mymotd }}"
