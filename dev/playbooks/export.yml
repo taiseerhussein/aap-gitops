@@ -11,7 +11,7 @@
     - name: Export JTs, Projects, Credentials
       ansible.controller.export:
         
-        aap_token: "{{ controller_oauthtoken }}"
+        # aap_token: "{{ controller_oauthtoken }}"
         controller_host: "{{ gateway_hostname }}"
         controller_username: "{{ gateway_username }}"
         controller_password: "{{ gateway_password }}"
