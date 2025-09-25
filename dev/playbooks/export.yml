@@ -1,0 +1,22 @@
+# export.yml
+- hosts: localhost
+  gather_facts: false
+  collections:
+    - awx.awx
+  vars_files:
+    - ../var_files/platform-info.yml
+  vars:
+    gateway_hostname: "{{ gateway_hostname }}"
+    gateway_username: "{{ gateway_username }}"
+    gateway_password: "{{ gateway_password }}"
+    validate_certs: true
+  tasks:
+    - name: Export all assets
+      awx.awx.export:
+        all: true
+      register: export_out
+
+    - name: Write export to file
+      copy:
+        content: "{{ export_out.assets | to_nice_yaml }}"
+        dest: exports/controller-export.yml
