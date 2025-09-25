@@ -6,15 +6,16 @@
   vars_files:
     - ../var_files/platform-info.yml
   vars:
-    controller_host: "{{ gateway_hostname }}"
-    controller_oauthtoken: "{{ pat }}"    # use a Personal Access Token
     validate_certs: false             # set true if your cert chain is trusted
   tasks:
     - name: Export JTs, Projects, Credentials
       ansible.controller.export:
-        job_templates: 'all'          # or ["JT A","JT B"]
+        
         aap_token: "{{ controller_oauthtoken }}"
-        controller_host: "{{ controller_host }}"
+        controller_host: "{{ gateway_hostname }}"
+        controller_username: "{{ gateway_username }}"
+        controller_password: "{{ gateway_password }}"
+        job_templates: 'all'          # or ["JT A","JT B"]
         projects: 'all'               # or ["Proj A","Proj B"]
         credentials: 'all'            # or a list of names
         validate_certs: "{{ validate_certs }}"
