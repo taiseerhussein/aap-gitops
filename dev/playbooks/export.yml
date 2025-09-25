@@ -11,7 +11,7 @@
 
     - name: Ping Controller API
       ansible.builtin.uri:
-        url: "{{ gateway_hostname }}/api/controller/v2/ping/"
+        url: "{{ gateway_hostname }}api/controller/v2/ping/"
         method: GET
         headers:
           Authorization: "Bearer {{ pat }}"
