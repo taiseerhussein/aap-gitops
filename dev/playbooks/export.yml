@@ -8,6 +8,18 @@
   vars:
     validate_certs: false             # set true if your cert chain is trusted
   tasks:
+
+    - name: Ping Controller API
+      ansible.builtin.uri:
+        url: "{{ {{ gateway_hostname }} }}/api/controller/v2/ping/"
+        method: GET
+        headers:
+          Authorization: "Bearer {{ controller_oauthtoken }}"
+        validate_certs: false
+      register: ping
+
+    - debug: var=ping.json
+    
     - name: Export JTs, Projects, Credentials
       ansible.controller.export:
         
