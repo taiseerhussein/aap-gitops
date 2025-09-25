@@ -15,6 +15,7 @@
         job_templates: 'all'          # or ["JT A","JT B"]
         projects: 'all'               # or ["Proj A","Proj B"]
         credentials: 'all'            # or a list of names
+        validate_certs: "{{ validate_certs }}"
       register: out
 
     - name: Save to YAML
