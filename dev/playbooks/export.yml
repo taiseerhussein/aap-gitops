@@ -13,7 +13,7 @@
   tasks:
     - name: Export all assets
       ansible.controller.export:
-        job_templates: 'all'
+        job_templates: all
       register: export_out
 
     - name: Write export to file
