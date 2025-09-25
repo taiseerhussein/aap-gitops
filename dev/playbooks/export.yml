@@ -13,6 +13,8 @@
     - name: Export JTs, Projects, Credentials
       ansible.controller.export:
         job_templates: 'all'          # or ["JT A","JT B"]
+        aap_token: "{{ controller_oauthtoken }}"
+        controller_host: "{{ controller_host }}"
         projects: 'all'               # or ["Proj A","Proj B"]
         credentials: 'all'            # or a list of names
         validate_certs: "{{ validate_certs }}"
