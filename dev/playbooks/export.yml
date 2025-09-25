@@ -1,22 +1,23 @@
-# export.yml
+# export-selected.yml
 - hosts: localhost
   gather_facts: false
   collections:
-    - awx.awx
+    - ansible.controller
   vars_files:
     - ../var_files/platform-info.yml
   vars:
-    gateway_hostname: "{{ gateway_hostname }}"
-    gateway_username: "{{ gateway_username }}"
-    gateway_password: "{{ gateway_password }}"
-    validate_certs: true
+    controller_host: "{{ gateway_hostname }}"
+    controller_oauthtoken: "{{ pat }}"    # use a Personal Access Token
+    validate_certs: false             # set true if your cert chain is trusted
   tasks:
-    - name: Export all assets
+    - name: Export JTs, Projects, Credentials
       ansible.controller.export:
-        job_templates: all
-      register: export_out
+        job_templates: 'all'          # or ["JT A","JT B"]
+        projects: 'all'               # or ["Proj A","Proj B"]
+        credentials: 'all'            # or a list of names
+      register: out
 
-    - name: Write export to file
+    - name: Save to YAML
       copy:
-        content: "{{ export_out.assets | to_nice_yaml }}"
-        dest: exports/controller-export.yml
+        content: "{{ out.assets | to_nice_yaml }}"
+        dest: aap-export.yml
