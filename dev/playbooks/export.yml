@@ -7,6 +7,8 @@
     - ../var_files/platform-info.yml
   vars:
     validate_certs: false             # set true if your cert chain is trusted
+  environment:
+    AWXKIT_API_BASE_PATH: "/api/controller/"
   tasks:
 
     - name: Ping Controller API
@@ -24,7 +26,7 @@
       ansible.controller.export:
         
         # aap_token: "{{ controller_oauthtoken }}"
-        controller_host: "{{ gateway_hostname }}api/controller/v2"
+        controller_host: "{{ gateway_hostname }}"
         controller_username: "{{ gateway_username }}"
         controller_password: "{{ gateway_password }}"
         job_templates: 'all'          # or ["JT A","JT B"]
