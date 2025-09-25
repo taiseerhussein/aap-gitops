@@ -12,7 +12,7 @@
     validate_certs: true
   tasks:
     - name: Export all assets
-      awx.awx.export:
+      ansible.controller.export:
         all: true
       register: export_out
 
