@@ -11,15 +11,15 @@
 
     - name: Ping Controller API
       ansible.builtin.uri:
-        url: "{{ {{ gateway_hostname }} }}/api/controller/v2/ping/"
+        url: "{{ gateway_hostname }}/api/controller/v2/ping/"
         method: GET
         headers:
-          Authorization: "Bearer {{ controller_oauthtoken }}"
+          Authorization: "Bearer {{ pat }}"
         validate_certs: false
       register: ping
 
     - debug: var=ping.json
-    
+
     - name: Export JTs, Projects, Credentials
       ansible.controller.export:
         
