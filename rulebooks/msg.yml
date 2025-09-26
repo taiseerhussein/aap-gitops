@@ -7,7 +7,7 @@
         port: 5000
   rules:
     - name: Run job template on payload defined
-      condition: event.payload.message == "Demo"
+      condition: event.meta.headers is defined
       action:
         run_job_template:
           name: export
