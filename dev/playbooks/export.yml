@@ -43,6 +43,8 @@
 # export-via-rest.yml
 - hosts: localhost
   gather_facts: false
+  vars_files:
+    - ../var_files/platform-info.yml
   vars:
     api: "{{ gateway_hostname }}/api/controller/v2"
     token: "{{ pat }}"
