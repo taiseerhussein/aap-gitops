@@ -41,7 +41,7 @@
 #         dest: aap-export.yml
 
 # export-via-rest.yml
-- hosts: localhost
+- hosts: ssh-test
   gather_facts: false
   vars_files:
     - ../var_files/platform-info.yml
