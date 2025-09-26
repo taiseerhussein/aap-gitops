@@ -1,41 +1,78 @@
-# export-selected.yml
+# # export-selected.yml
+# - hosts: localhost
+#   gather_facts: false
+#   # collections:
+#   #   - ansible.controller
+#   vars_files:
+#     - ../var_files/platform-info.yml
+#   vars:
+#     validate_certs: false             # set true if your cert chain is trusted
+#   environment:
+#     AWXKIT_API_BASE_PATH: "/api/controller/"
+#   tasks:
+
+#     - name: Ping Controller API
+#       ansible.builtin.uri:
+#         url: "{{ gateway_hostname }}/api/controller/v2/ping/"
+#         method: GET
+#         headers:
+#           Authorization: "Bearer {{ pat }}"
+#         validate_certs: false
+#       register: ping
+
+#     - debug: var=ping.json
+
+#     - name: Export JTs, Projects, Credentials
+#       ansible.controller.export:
+        
+#         # aap_token: "{{ controller_oauthtoken }}"
+#         controller_host: "{{ gateway_hostname }}"
+#         controller_username: "{{ gateway_username }}"
+#         controller_password: "{{ gateway_password }}"
+#         job_templates: all          # or ["JT A","JT B"]
+#         projects: all               # or ["Proj A","Proj B"]
+#         credentials: all            # or a list of names
+#         validate_certs: "{{ validate_certs }}"
+#       register: out
+
+#     - name: Save to YAML
+#       copy:
+#         content: "{{ out.assets | to_nice_yaml }}"
+#         dest: aap-export.yml
+
+# export-via-rest.yml
 - hosts: localhost
   gather_facts: false
-  # collections:
-  #   - ansible.controller
-  vars_files:
-    - ../var_files/platform-info.yml
   vars:
-    validate_certs: false             # set true if your cert chain is trusted
-  environment:
-    AWXKIT_API_BASE_PATH: "/api/controller/"
+    api: "{{ gateway_hostname }}/api/controller/v2"
+    token: "{{ pat }}"
+   
   tasks:
-
-    - name: Ping Controller API
+    - name: Get projects
       ansible.builtin.uri:
-        url: "{{ gateway_hostname }}/api/controller/v2/ping/"
-        method: GET
-        headers:
-          Authorization: "Bearer {{ pat }}"
+        url: "{{ api }}/projects/?page_size=200"
+        headers: { Authorization: "Bearer {{ token }}" }
         validate_certs: false
-      register: ping
+      register: projects
 
-    - debug: var=ping.json
+    - name: Get job templates
+      ansible.builtin.uri:
+        url: "{{ api }}/job_templates/?page_size=200"
+        headers: { Authorization: "Bearer {{ token }}" }
+        validate_certs: false
+      register: jts
 
-    - name: Export JTs, Projects, Credentials
-      ansible.controller.export:
-        
-        # aap_token: "{{ controller_oauthtoken }}"
-        controller_host: "{{ gateway_hostname }}"
-        controller_username: "{{ gateway_username }}"
-        controller_password: "{{ gateway_password }}"
-        job_templates: all          # or ["JT A","JT B"]
-        projects: all               # or ["Proj A","Proj B"]
-        credentials: all            # or a list of names
-        validate_certs: "{{ validate_certs }}"
-      register: out
+    - name: Get credentials
+      ansible.builtin.uri:
+        url: "{{ api }}/credentials/?page_size=200"
+        headers: { Authorization: "Bearer {{ token }}" }
+        validate_certs: false
+      register: creds
 
-    - name: Save to YAML
+    - name: Save YAML
       copy:
-        content: "{{ out.assets | to_nice_yaml }}"
         dest: aap-export.yml
+        content: |
+          projects: {{ projects.json.results | to_nice_yaml }}
+          job_templates: {{ jts.json.results | to_nice_yaml }}
+          credentials: {{ creds.json.results | to_nice_yaml }}
