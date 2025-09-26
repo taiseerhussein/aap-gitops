@@ -1,8 +1,8 @@
 # export-selected.yml
 - hosts: localhost
   gather_facts: false
-  collections:
-    - ansible.controller
+  # collections:
+  #   - ansible.controller
   vars_files:
     - ../var_files/platform-info.yml
   vars:
@@ -29,9 +29,9 @@
         controller_host: "{{ gateway_hostname }}api/controller/v2/"
         controller_username: "{{ gateway_username }}"
         controller_password: "{{ gateway_password }}"
-        job_templates: 'all'          # or ["JT A","JT B"]
-        projects: 'all'               # or ["Proj A","Proj B"]
-        credentials: 'all'            # or a list of names
+        job_templates: all          # or ["JT A","JT B"]
+        projects: all               # or ["Proj A","Proj B"]
+        credentials: all            # or a list of names
         validate_certs: "{{ validate_certs }}"
       register: out
 
