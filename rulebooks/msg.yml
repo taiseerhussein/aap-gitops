@@ -1,19 +1,13 @@
----
-- name: Minimal Test Rulebook
-  hosts: localhost
-  execution_strategy: parallel
+- name: React to webhook events
+  hosts: all
   sources:
-    - ansible.eda.webhook:
+    - name: webhook_source
+      ansible.eda.webhook:
         host: 0.0.0.0
         port: 5000
-
   rules:
-    - name: Match and pass var
-      condition: true
-      actions:
-        - run_job_template:
-            name: Demo_Job_Template
-            organization: Default
-            # job_args:
-            #   extra_vars:
-            #     full_payload: "{{ event.payload.message }}"
+    - name: Run job template on payload defined
+      condition: event.payload.message == "Demo"
+      action:
+        run_job_template:
+          name: Demo_Job_Template
