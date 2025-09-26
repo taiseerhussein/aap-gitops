@@ -10,4 +10,4 @@
       condition: event.payload.message == "Demo"
       action:
         run_job_template:
-          name: Demo_Job_Template
+          name: export
