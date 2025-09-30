@@ -1,0 +1,10 @@
+---
+- name: Export all assets
+  hosts: localhost
+  tasks:
+    - name: Export all assets
+      awx.awx.export:
+        all: true
+        tower_username: admin
+        tower_password: "{{ _tower_password_ }}"
+        tower_host: https://{{ ansible_host }}
