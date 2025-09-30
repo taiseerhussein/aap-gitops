@@ -5,8 +5,8 @@
     - awx.awx
   vars_files:
     - ../var_files/platform-info.yml
-  environment:
-    AWXKIT_API_BASE_PATH: "/api/controller/"
+  # environment:
+  #   AWXKIT_API_BASE_PATH: "/api/controller/"
   
   tasks: 
   - name: Export selected assets from AAP 2.5
