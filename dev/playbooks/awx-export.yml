@@ -1,6 +1,8 @@
 ---
 - name: Export all assets
   hosts: localhost
+  collections:
+    - awx.awx
   tasks:
     - name: Export all assets
       awx.awx.export:
