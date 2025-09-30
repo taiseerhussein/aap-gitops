@@ -17,7 +17,7 @@
       controller_password: "{{ gateway_password }}"
       validate_certs: false
       # pick what you need; avoid "all" at first
-      organizations: ["all"]
+      # organizations: ["all"]
       # users: ["all"]
       credentials: ["all"]
       projects: ["all"]
