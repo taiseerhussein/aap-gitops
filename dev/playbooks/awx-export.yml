@@ -10,11 +10,11 @@
   
   tasks: 
   - name: Export selected assets from AAP 2.5
-  
+
     ansible.controller.export:
-      controller_host: "{{ controller_host }}"
-      controller_username: "{{ controller_username }}"
-      controller_password: "{{ controller_password }}"
+      controller_host: "{{ gateway_hostname }}"
+      controller_username: "{{ gateway_username }}"
+      controller_password: "{{ gateway_password }}"
       validate_certs: false
       # pick what you need; avoid "all" at first
       organizations: ["all"]
