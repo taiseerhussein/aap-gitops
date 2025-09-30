@@ -18,9 +18,10 @@
       validate_certs: false
       # pick what you need; avoid "all" at first
       organizations: ["all"]
-      users: ["all"]
+      # users: ["all"]
       credentials: ["all"]
       projects: ["all"]
+      job_templates: ["all"]
     environment:
       AWXKIT_API_BASE_PATH: "/api/controller/"
   
