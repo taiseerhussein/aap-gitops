@@ -7,10 +7,27 @@
     - ../var_files/platform-info.yml
   environment:
     AWXKIT_API_BASE_PATH: "/api/controller/"
-  tasks:
-    - name: Export all assets
-      awx.awx.export:
-        all: true
-        tower_username: admin
-        tower_password: "{{ gateway_password }}"
-        tower_host: "{{ gateway_hostname }}"
+  
+  tasks: 
+  - name: Export selected assets from AAP 2.5
+  
+    ansible.controller.export:
+      controller_host: "{{ controller_host }}"
+      controller_username: "{{ controller_username }}"
+      controller_password: "{{ controller_password }}"
+      validate_certs: false
+      # pick what you need; avoid "all" at first
+      organizations: ["all"]
+      users: ["all"]
+      credentials: ["all"]
+      projects: ["all"]
+    environment:
+      AWXKIT_API_BASE_PATH: "/api/controller/"
+  
+  # tasks:
+  #   - name: Export all assets
+  #     awx.awx.export:
+  #       all: true
+  #       tower_username: admin
+  #       tower_password: "{{ gateway_password }}"
+  #       tower_host: "{{ gateway_hostname }}"
