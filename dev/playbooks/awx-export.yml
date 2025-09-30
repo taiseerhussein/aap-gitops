@@ -13,4 +13,4 @@
         all: true
         tower_username: admin
         tower_password: "{{ gateway_password }}"
-        tower_host: https://{{ ansible_host }}
+        tower_host: "{{ gateway_hostname }}"
