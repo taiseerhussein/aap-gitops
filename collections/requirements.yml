@@ -1,10 +1,10 @@
 collections:
   - name: community.general
-  - name: ansible.windows
-  - name: community.vmware
-  - name: vmware.vmware
-  - name: amazon.aws
-  - name: azure.azcollection
-  - name: amazon.aws
-  - name: community.aws
+  # - name: ansible.windows
+  # - name: community.vmware
+ #  - name: vmware.vmware
+ # - name: amazon.aws
+ #  - name: azure.azcollection
+  # - name: amazon.aws
+  # - name: community.aws
   - name: awx.awx
