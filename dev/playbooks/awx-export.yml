@@ -22,8 +22,8 @@
       credentials: ["all"]
       projects: ["all"]
       job_templates: ["all"]
-    environment:
-      AWXKIT_API_BASE_PATH: "/api/controller/"
+    # environment:
+    #   AWXKIT_API_BASE_PATH: "/api/controller/"
   
   # tasks:
   #   - name: Export all assets
