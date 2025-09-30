@@ -3,10 +3,13 @@
   hosts: localhost
   collections:
     - awx.awx
+  vars_files:
+     - ../var_files/platform-info.yml
+ 
   tasks:
     - name: Export all assets
       awx.awx.export:
         all: true
         tower_username: admin
-        tower_password: "{{ _tower_password_ }}"
+        tower_password: "{{ gateway_password }}"
         tower_host: https://{{ ansible_host }}
