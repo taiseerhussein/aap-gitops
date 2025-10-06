@@ -1,5 +1,6 @@
 - name: React to webhook events
   hosts: all
+  execution_strategy: parallel
   sources:
     - name: webhook_source
       ansible.eda.webhook:
