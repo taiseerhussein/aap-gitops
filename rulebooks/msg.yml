@@ -6,6 +6,8 @@
       ansible.eda.webhook:
         host: 0.0.0.0
         port: 5000
+  collections: dynatrace.event_driven_ansible
+     
   rules:
     - name: Run job template on payload defined
       condition: event.payload.message == "Demo"
