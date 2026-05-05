@@ -1,0 +1,9 @@
+---
+- name: Use data from previous workflow node
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Show data from previous playbook
+      ansible.builtin.debug:
+        msg: "Server {{ server_name }} patch status is {{ patch_status }} for ticket {{ ticket_number }}"

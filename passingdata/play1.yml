@@ -1,0 +1,11 @@
+- name: Generate data
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Set workflow artifact
+      ansible.builtin.set_stats:
+        data:
+          server_name: "web01"
+          patch_status: "completed"
+          ticket_number: "INC123456"
