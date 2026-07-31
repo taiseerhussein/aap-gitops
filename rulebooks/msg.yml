@@ -9,9 +9,7 @@
   collection: dynatrace.event_driven_ansible
      
   rules:
-    - name: Run job template on payload defined
-      condition: event.payload.message == "Demo"
+    - name: Print received event
+      condition: event != None
       action:
-        run_job_template:
-          name: export
-          organization: Default
+        print_event:
