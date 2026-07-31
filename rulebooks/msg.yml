@@ -9,7 +9,8 @@
   collection: dynatrace.event_driven_ansible
      
   rules:
-    - name: Print received event
-      condition: event != None
-      action:
-        print_event:
+  - name: Print incoming event payload
+    condition: event.payload is defined
+    action:
+      debug:
+        msg: "{{ event }}"
