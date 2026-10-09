@@ -13,4 +13,4 @@
     condition: event.payload is defined
     action:
       debug:
-        msg: "{{ event }}"
+        msg: "Rev. the following message: {{ event }}"
