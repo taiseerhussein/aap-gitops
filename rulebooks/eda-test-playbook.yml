@@ -1,0 +1,21 @@
+---
+- name: Display EDA Alert Data
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Print Alert Name
+      ansible.builtin.debug:
+        var: alertname
+
+    - name: Print Severity
+      ansible.builtin.debug:
+        var: severity
+
+    - name: Print Labels
+      ansible.builtin.debug:
+        var: labels
+
+    - name: Print Annotations
+      ansible.builtin.debug:
+        var: annotations

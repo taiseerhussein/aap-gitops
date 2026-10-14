@@ -18,5 +18,12 @@
         event.labels.severity == "critical"
         and event.status == "firing"
       action:
-        debug:
-          msg: "Critical alert received"
+        run_job_template:
+          name: debug-eda-event
+          organization: Default
+          job_args:
+            extra_vars:
+              alertname: "{{ event.labels.alertname }}"
+              severity: "{{ event.labels.severity }}"
+              labels: "{{ event.labels }}"
+              annotations: "{{ event.annotations }}"
