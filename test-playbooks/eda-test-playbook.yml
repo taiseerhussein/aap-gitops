@@ -1,0 +1,31 @@
+---
+- name: Prepare ServiceNow Incident
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Format alert information
+      ansible.builtin.set_fact:
+        incident_short_description: >-
+          {{ alertname }} - {{ labels.instance | default('Unknown') }}
+        incident_description: |
+          OpenShift Alert Information
+
+          Alert Name: {{ alertname }}
+          Severity: {{ severity }}
+
+          Labels:
+          {% for key, value in labels | dictsort %}
+          {{ key }} = {{ value }}
+          {% endfor %}
+
+          Annotations:
+          {% for key, value in annotations | dictsort %}
+          {{ key }} = {{ value }}
+          {% endfor %}
+
+    - name: Display ServiceNow incident information
+      ansible.builtin.debug:
+        msg:
+          short_description: "{{ incident_short_description }}"
+          description: "{{ incident_description }}"
